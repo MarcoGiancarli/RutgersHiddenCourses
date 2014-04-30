@@ -1,5 +1,5 @@
 import requests
-from pymongo import Connection()
+from pymongo import Connection
 
 connection = Connection()
 database = connection['rutgershiddencourses']
@@ -22,4 +22,21 @@ for subject in subject_codes:
         sections = course['sections']
         for section in sections:
             if section['printed'] == 'N':
-                section['index'] + "  --  " + course['title']
+                time_place = []
+                for meeting in section['meetingTimes']:
+                    time_place.append({'start_time':meeting['startTime'],
+                                       'end_time'  :meeting['endTime'],
+                                       'pm_code'   :meeting['pmCode'],
+                                       'campus'    :meeting['campusAbbrev'],
+                                       'building'  :meeting['buildingCode'],
+                                       'room'      :meeting['roomNumber'],
+                                       'day'       :meeting['meetingDay']})
+
+                course_list.insert({'index'     :section['index'],
+                                    'section'   :section['index'],
+                                    'title'     :course['title'],
+                                    'subject'   :course['subject'],
+                                    'number'    :course['courseNumber'],
+                                    'time_place':time_place})
+
+                print section['index'] + '  ' + course['title']
