@@ -1,5 +1,15 @@
 import requests
+import pymongo
 
-CS_URL = 'view-source:sis.rutgers.edu/soc/courses.json?semester=92014&campus=NB&level=U&subject=198'
+BASE_URL = 'http://sis.rutgers.edu/soc/courses.json?semester=92014&campus=NB&level=U&subject='
 
-courses = requests.get(CS_URL).json()
+
+
+for subject in subject_codes:
+    subject_courses = requests.get(BASE_URL + str(subject)).json()
+
+    for course in subject_courses:
+        sections = course['sections']
+        for section in sections:
+            if section['printed'] == 'N':
+                print section['index'] + "  --  " + course['title']
