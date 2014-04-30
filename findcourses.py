@@ -2,7 +2,8 @@ import requests
 from pymongo import Connection
 
 connection = Connection()
-database = connection['rutgershiddencourses']
+connection.drop_database('rutgers_hidden_courses')
+database = connection['rutgers_hidden_courses']
 course_list = database['course_list']
 
 SUBJECTS_URL = 'http://sis.rutgers.edu/soc/subjects.json?semester=92014&campus=NB&level=U'
@@ -33,7 +34,7 @@ for subject in subject_codes:
                                        'day'       :meeting['meetingDay']})
 
                 course_list.insert({'index'     :section['index'],
-                                    'section'   :section['index'],
+                                    'section'   :section['number'],
                                     'title'     :course['title'],
                                     'subject'   :course['subject'],
                                     'number'    :course['courseNumber'],
