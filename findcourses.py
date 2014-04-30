@@ -1,5 +1,11 @@
 import requests
 
-CS_URL = 'view-source:sis.rutgers.edu/soc/courses.json?semester=92014&campus=NB&level=U&subject=198'
+subjects = 'http://sis.rutgers.edu/soc/subjects.json?semester=92014&campus=NB&level=U'
 
-courses = requests.get(CS_URL).json()
+subjects_list = requests.get(subjects).json()
+subjectcodes = []
+
+for subject in subjects_list:
+	subjectcodes.append(int(subject['code']))
+
+print subjectcodes
