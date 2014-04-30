@@ -35,6 +35,11 @@ while True:
         if len(params) != 1:
             print 'Usage: find'
             continue
+        print '\n' + '-'*40
+        if subject_number:
+            print 'SUBJECT NUMBER: ' + subject_number
+        if course_number:
+            print 'COURSE NUMBER:  ' + course_number
         filters = {}
         if subject_number:
             filters.update({'subject':subject_number})
@@ -44,7 +49,13 @@ while True:
         for section in query:
             print section['index']+'  '+section['number']+'  '+section['section']+'  '+section['title']
             for meeting in section['time_place']:
-                print '    '+meeting['day']+'  '+meeting['start_time']+'-'+meeting['end_time']+' '+meeting['pm_code']+'M  '+meeting['campus']+'  '+meeting['building']+'-'+meeting['room']
+                if meeting['day'] is not None:
+                    place = ''
+                    if meeting['building'] is not None:
+                        place += meeting['building']+'-'+meeting['room']
+                    print '    '+meeting['day']+'  '+meeting['start_time']+'-'+meeting['end_time']+' '+meeting['pm_code']+'M  '+meeting['campus']+'  '+place
+                else:
+                    print '    Online class'
 
     elif params[0] == 'clear':
         if len(params) != 1:
