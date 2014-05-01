@@ -4,6 +4,7 @@ RutgersHiddenCourses
 Finds and lists all hidden sections for courses at Rutgers.
 
 Usage:
+
     $ python findcourses.py
     $ python coursesearch.py
 
